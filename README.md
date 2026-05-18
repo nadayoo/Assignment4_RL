@@ -9,8 +9,6 @@
 | File | What it is |
 |---|---|
 | `gridworld_rl.py` | The full implementation. Runs both Value Iteration and Policy Iteration for all four `(R1, R2)` cases. |
-| `report.md` | The written report: results, optimal policies, and intuitive explanations of why each policy looks the way it does. |
-| `run_output.txt` | A saved transcript of running `gridworld_rl.py` (so the grader can read the results without re-running). |
 | `README.md` | This file. |
 
 ## How to run
