@@ -12,7 +12,7 @@ ARROWS  = {'U': '↑', 'D': '↓', 'L': '←', 'R': '→'}
 DELTAS  = {'U': (-1, 0), 'D': (1, 0), 'L': (0, -1), 'R': (0, 1)}
 
 
-# (2) MDP definition                                                             #
+# (2) MDP definition                                                             
 def build_rewards(R1, R2):
     """Return the 5x5 reward grid for the given R1, R2 values."""
     return np.array([
