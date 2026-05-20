@@ -68,9 +68,16 @@ def value_iteration(R1, R2, gamma=GAMMA, theta=THETA, max_iters=MAX_ITERS):
 
     # Greedy policy extraction from the converged V
     policy = np.empty((ROWS, COLS), dtype=object)
+    tol = 1e-9
     for r, c in product(range(ROWS), range(COLS)):
-        q = [expected_next_V(r, c, a, V) for a in ACTIONS]
-        policy[r, c] = ACTIONS[int(np.argmax(q))]
+        q = np.array([expected_next_V(r, c, a, V) for a in ACTIONS])
+        best_val = q.max()
+        
+        # Find all actions that are within the tolerance of the maximum Q-value
+        best_actions = [ACTIONS[i] for i in range(len(ACTIONS)) if best_val - q[i] <= tol]
+        
+        # Universally pick the first one from the filtered list to keep it consistent
+        policy[r, c] = best_actions[0]
 
     return V, policy, iters
 
@@ -116,7 +123,9 @@ def policy_iteration(R1, R2, gamma=GAMMA, seed=42, max_iters=1000):
             if best_val - current_q <= tol:
                 new_policy[r, c] = current_a            # tie -> stay
             else:
-                new_policy[r, c] = ACTIONS[int(np.argmax(q))]
+                # Apply the exact same strict tie-breaker as Value Iteration
+                best_actions = [ACTIONS[i] for i in range(len(ACTIONS)) if best_val - q[i] <= tol]
+                new_policy[r, c] = best_actions[0]
                 stable = False
         policy = new_policy
         if stable:
